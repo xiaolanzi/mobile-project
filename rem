@@ -1,0 +1,43 @@
+html {
+  font-size: 62.5%;
+}
+@media screen and (min-width: 360px) and (max-width: 374px) and (orientation: portrait) {
+  html {
+    font-size: 70.3%;
+  }
+}
+@media screen and (min-width: 375px) and (max-width: 383px) and (orientation: portrait) {
+  /*ip6:375px*/
+  html {
+    font-size: 73.2%;
+  }
+}
+@media screen and (min-width: 384px) and (max-width: 399px) and (orientation: portrait) {
+  /*mx2:400px*/
+  html {
+    font-size: 75%;
+  }
+}
+@media screen and (min-width: 400px) and (max-width: 413px) and (orientation: portrait) {
+  /*mx2:400px*/
+  html {
+    font-size: 78.125%;
+  }
+}
+@media screen and (min-width: 414px) and (max-width: 479px) and (orientation: portrait) {
+  /*ip6+:414px*/
+  html {
+    font-size: 80.85%;
+  }
+}
+@media screen and (min-width: 480px) and (max-width: 639px) and (orientation: portrait) {
+  html {
+    font-size: 93.75%;
+  }
+}
+@media screen and (min-width: 640px) and (orientation: portrait) {
+  html {
+    font-size: 125%;
+  }
+}
+//webkit 字体的下限为12px,所以font-size 要大于62.5%
