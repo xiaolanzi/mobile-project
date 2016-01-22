@@ -1,0 +1,73 @@
+事件对象ev兼容
+document.onclick=function(ev){//兼容ff要加ev
+   var oEvent = ev ||event;//ie,chrome下ev为null,则oEvent = event,ff下需要ev参数 则oEvent = ev
+   console.log(oEvent.clientX+','oEvent.clientY);//获取鼠标可视区的坐标
+   
+   //阻止冒泡事件，都兼容
+}
+
+阻止冒泡事件，都兼容
+oEvent.cancelBubble = true;
+
+//绑定事件的this兼容
+oBtn.attachEvent('onclick',function(){  //ie绑定attachEvent 解除detachEvent
+    alert(this);//ie,window,小bug
+})   
+oBtn.addEventListenter('click',function(){  //ff,chrome绑定addEventListener 解除removeEventListener
+    alert(this)//ff,chrome oBtn
+},false)
+
+//获取scrollTop兼容
+document.documentElement.scrollTop//ie，ff能获取,chrome不能获取
+document.body.scrollTop//chrome获取
+
+跟随鼠标移动主要代码
+var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;//这样鼠标和块不会出现分离的情况
+var scrollLeft = document.documentElement.scrollLeft||document.body.scrollLeft;
+oDiv.style.left = oEvent.clientX+scrollLeft+'px';//left是相对于父级document最左边的距离
+oDiv.style.top = oEvent.clientX+scrollTop+'px';//top是相对于父级顶部的距离，包括滚动条的距离
+
+只输入数字和退格的文本框
+var oTxt = document.getElementById('txt1');
+oTxt.onkeydown = function(){//0-->48  9-->57  退格-->8
+	var oEvent = ev ||event;
+	if(oEvent.keyCode!=8&&oEvent.keyCode.keyCode<48||oEvent.keyCode>57)
+	{
+		return false;//都兼容
+	}
+}
+
+***return false正常加事件没问题，但用addEventListen里加return false不管用 
+***在火狐，chrome下的addEventListener 解除默认事件用 ev.preventDefault()
+
+
+仿juery 绑定事件内的return false 阻止默认和冒泡
+$(function){
+	$(document).bind('contextmenu',function(){
+		return false;//阻止默认和冒泡
+	})
+}
+
+function myAddEvent(obj, sEv, fn)
+{
+	if(obj.attachEvent)
+	{
+		obj.attachEvent('on'+sEv, function (){
+			if(false==fn.call(obj))
+			{
+				event.cancelBubble=true;//阻止冒泡
+				return false;//阻止ie默认事件
+			}
+		});
+	}
+	else
+	{
+		obj.addEventListener(sEv, function (ev){
+			if(false==fn.call(obj))
+			{
+				ev.cancelBubble=true;
+				ev.preventDefault();//在addEventListener加return false不管用，必须用preventDefault
+			}
+		}, false);
+	}
+}
