@@ -1,0 +1,46 @@
+cookie页面用来保存信息，比如自动登录，记住用户名
+cookie的特性
+--存在客户端的，不安全
+--在服务器环境下运行(firefox浏览器可以运行，其它不行)
+--在同一个网站中所有页面共享一套cookie
+--数量，大小有限
+--过期时间(js控制)document.cookie  不会覆盖
+--每一条cookie可以有独立的过期时间，用户名和密码可以设置不同的过期时间
+document.cookie = "user = admin" //设置cookie 如果没有设置时间，默认浏览器关闭cookie就会消失
+alert(document.cookie)
+
+
+var oData = new Date();
+oData.setData(oData.getData()+30);//30天以后
+document.cookie = "user = blue;expires = "+oData;//expires指定过期时间，可以在火狐工具--页面信息--安全--查看cookie信息中显示
+
+alert(oData.getFullYear()+'-'+(oData.getMonth()+1)+'-'+oData.getData());//2016-1-22
+
+封成一个函数
+function setCookie(name,value,iDay){//设置cookie
+    var oData = new Data();
+    oData.setData(oData.getData()+iDay);
+    document.cookie = name+'='+value+';expires = '+oData;
+}
+function getCookie(name){  //获取cookie
+    var arr = document.cookie.split('; ');//分号和空格分开 username=abc; password=1234;
+    var i = 0;
+    for(i=0;i<arr.length;i++){
+       var arr2 = arr[i].split('=');//arr2[0],arr2[1]
+       if(arr2[0]==name){
+         return arr2[1];
+       }
+    }
+    
+    return ' ';//找不到cookie设为空
+
+}
+
+function removeCookie(name){ //因为cookie的大小有限(4k左右),所以要及时删除
+    setCookie(name,'1',-1);
+
+}
+
+setCookie('username','abc',30);//30后过期
+setCookie('password','1234',10);//10后过期
+
