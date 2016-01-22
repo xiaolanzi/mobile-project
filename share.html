@@ -1,0 +1,50 @@
+//分享到
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>startMove</title>
+<style>
+	*{margin:0;padding:0;}
+	#div1 {width:100px; height:200px; background:#CCC; position:absolute; left:-100px;}
+    #div1 span {width:20px; height:60px; line-height:20px; text-align:center; left:100px; top:70px; background:yellow; position:absolute;}
+	
+</style>
+</head>
+<script>
+	window.onload = function(){
+		var oDiv = document.getElementById('div1');
+		oDiv.onmouseover=function(){
+			startMove(0);
+		}
+		oDiv.onmouseout = function(){
+			startMove(-100);
+		}
+		var timer = null;
+
+		function startMove(iTarget){
+			
+			clearInterval(timer);
+			timer = setInterval(function(){
+				 var iSpeed = 0
+                  if (oDiv.offsetLeft<iTarget) {
+                  	    iSpeed = 10;
+                  }else{
+                  	    iSpeed = -10;
+                  };
+                  if (oDiv.offsetLeft==iTarget) {
+                  	clearInterval(timer);
+                  }else{
+                  	oDiv.style.left = oDiv.offsetLeft+iSpeed+'px';
+                  };
+			},30)
+		}
+		
+	}
+</script>
+<body>
+<div id="div1">
+	<span id="span1">分享到</span>
+</div>
+</body>
+</html>
