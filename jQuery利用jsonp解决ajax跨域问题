@@ -1,0 +1,39 @@
+jQuery利用jsonp解决ajax跨域问题    参考网址 http://www.clanfei.com/2012/08/1637.html 
+                                           http://www.w3school.com.cn/jquery/ajax_getjson.asp
+
+1.什么是跨域?
+简单的来说，出于安全方面的考虑，页面中的JavaScript无法访问其他服务器上的数据，即“同源策略”。
+而跨域就是通过某些手段来绕过同源策略限制，实现不同服务器之间通信的效果。
+
+2.什么是jsonp?
+JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式，而JSONP（JSON with Padding）则是JSON 的一种“使用模式”，
+通过这种模式可以实现数据的跨域获取。
+
+3.Jsonp的跨域原理
+    在同源策略下，在某个服务器下的页面是无法获取到该服务器以外的数据的，但img、iframe、script等标签是个例外，
+这些标签可以通过src属性请求到其他服务器上的数据。利用script标签的开放策略，我们可以实现跨域请求数据，
+当然，也需要服务端的配合。当我们正常地请求一个JSON数据的时候，服务端返回的是一串JSON类型的数据，
+而我们使用JSONP模式来请求数据的时候，服务端返回的是一段可执行的JavaScript代码。
+
+在jQuery中如何通过JSONP来跨域获取数据
+
+第一种方法是在ajax函数中设置dataType为'jsonp'：
+$.ajax({
+	dataType: 'jsonp',
+	url: 'http://www.a.com/user?id=123',
+	success: function(data){
+		//处理data数据
+	}
+});
+
+第二种方法是利用getJSON来实现，只要在地址中加上callback=?参数即可：
+$.getJSON('http://www.a.com/user?id=123&callback=?', function(data){
+	//处理data数据
+});
+
+第三种方法也可以简单地使用getScript方法：
+//此时也可以在函数外定义foo方法
+function foo(data){
+	//处理data数据
+}
+$.getScript('http://www.a.com/user?id=123&callback=foo');
