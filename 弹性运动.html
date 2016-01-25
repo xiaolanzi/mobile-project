@@ -1,3 +1,50 @@
+<!DOCTYPE html>//块的弹性运动
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>startMove</title>
+<style>
+	#div1{width:100px;height:50px;background: red;}
+</style>
+</head>
+<script>
+// 弹性运动不适用 1，会过界，比0还小 样式不过界的时候不适用
+    window.onload = function(){
+    	var oDiv = document.getElementById('div1');
+    	oDiv.onmouseover  = function(){
+    		startMove(oDiv,200);
+    	};
+    	oDiv.onmouseout = function(){
+    		startMove(oDiv,50);
+    	}
+       }
+    var iSpeed=0;
+    var height=50;
+    var timer = null;
+	function startMove(obj,iTarget){
+      clearInterval(obj.timer);
+      obj.timer = setInterval(function(){
+           iSpeed +=(iTarget-height)/5;
+           iSpeed*=0.7;
+           if(Math.abs(iSpeed)<1&&Math.abs(iTarget-height)<1){
+           		clearInterval(obj.timer);
+           		obj.style.height = iTarget+'px';
+           }else{
+           	    height+=iSpeed;
+           	    if(height<0){
+           	    	height=0;
+           	    }
+           	    obj.style.height = height+'px';
+           }
+      },30)
+		
+	}
+</script>
+<body>
+<div id="div1"></div>
+</body>
+</html>
+//滑动的菜单
 <!DOCTYPE html>
 <html lang="en">
 <head>
