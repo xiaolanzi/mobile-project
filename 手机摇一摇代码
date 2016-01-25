@@ -1,0 +1,46 @@
+(function(){
+	 		if(window.DeviceMotionEvent){//检测设备是否支持重力传感
+	 			window.addEventListener('devicemotion',deviceMotionHandler,false);//绑定运动传感事件，摇一摇处理函数
+
+	 		}else{
+	 			alert('您的设备不支持硬件调用');
+	 		}
+	 		var x = 0,
+	 		    y = 0,
+	 		    z = 0,
+	 		    lastX = 0,
+	 		    lastY = 0,
+	 		    lastZ = 0,
+	 		    curTime = 0,
+	 		    lastTime = 0,
+	 		    diffTime = 0,
+	 		    speed = 0;
+
+ 		  var SHAKE_THRESHOLD = 800;
+ 		  function deviceMotionHandler(eventData) {  
+		  var acceleration =eventData.accelerationIncludingGravity;  
+		   
+		  var curTime = new Date().getTime();  
+		   
+		  if ((curTime - lastTime)> 100) {  //每隔一段时间进行三个方向值的计算，防止系统认为简单的变化也是在摇动手机
+		   
+		      diffTime = curTime -lastTime;  
+		      lastTime = curTime;  
+		   
+		      x = acceleration.x;  //获取三个方向的重力加速度
+		      y = acceleration.y;  
+		      z = acceleration.z;  
+		   
+		      speed = Math.abs(x +y + z - lastX - lastY - lastZ) / diffTime * 10000;  //防止出现负数
+		       
+		           if (speed > SHAKE_THRESHOLD) {  //当计算的该值大于预定的值执行操作
+		                            alert("shaked!");  
+		      }  
+		      lastX = x;  纪录上一次三个方向的值
+		      lastY = y;  
+		      lastZ = z;  
+		    }  
+		}  
+
+	 	})();
+	
