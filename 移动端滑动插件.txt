@@ -1,0 +1,7 @@
+http://www.superslide2.com/TouchSlide/ 触屏滑动特效插件
+
+http://www.superslide2.com/
+SuperSlide 致力于解决网站大部分特效展示问题，使网站代码规范整洁，方便维护更新。
+网站上常用的“焦点图/幻灯片”“Tab标签切换”“图片滚动”“无缝滚动”等只需要一个SuperSlide即可解决！
+
+http://www.swiper.com.cn/移动端触摸滑动插件
