@@ -1,0 +1,60 @@
+移动端设计稿750*1134
+html{ font-size: 312.5%; } 
+@media screen and (max-width:359px) and (orientation:portrait) {
+    html { font-size: 266.67%; } 
+}
+@media screen and (min-width:360px) and (max-width:374px) and (orientation:portrait) {
+    html { font-size: 300%; } 
+}
+@media screen and (min-width:384px) and (max-width:399px) and (orientation:portrait) {
+    html { font-size: 320%; } 
+}
+@media screen and (min-width:400px) and (max-width:413px) and (orientation:portrait) {
+    html { font-size: 333.33%; } 
+}
+@media screen and (min-width:414px) and (max-width:431px) and (orientation:portrait){
+    html { font-size: 345%; }
+}
+@media screen and (min-width:432px) and (max-width:479px) and (orientation:portrait){
+    html { font-size:360%; }
+}
+@media screen and (min-width:480px)and (max-width:639px) and (orientation:portrait){
+   html{ font-size:400%;}
+} 
+@media screen and (min-width:640px) and (orientation:portrait){
+   html{ font-size:533.33%;}
+}
+
+例如750px设计稿上320px*200px字体大小为32px的区域样式为：
+html{ font-size: 312.5%; } 
+.div_ex{
+    width:3.2rem;
+    height:2rem;
+    font-size:0.32rem    
+}
+
+同时注意统一加上以下处理：主要处理短屏下缩放，以及初始化时固定页面大小，防止竖屏下弹出键盘或横屏时页面发生缩放的情况
+//function initScreen(){
+    //    $("html").css("font-size",$(window).height()/$(window).width()<1.5 ? ($(window).height()/603*312.5+"%") : ($(window).width()/375*312.5+"%"))
+    //}
+    //2016-01-06将上述方法更新为
+    var initScreen=function(callback){//初始化html  font-size
+        $("html").css("font-size",document.documentElement.clientHeight/document.documentElement.clientWidth<1.5 ? (document.documentElement.clientHeight/603*312.5+"%") : (document.documentElement.clientWidth/375*312.5+"%")); //单屏全屏布局时使用,短屏下自动缩放
+        //$("html").css("font-size",document.documentElement.clientWidth/375*312.5+"%");//长页面时使用,不缩放
+        if(callback)callback();
+    }
+
+
+function _onorientationchange(e){
+    if(window.orientation==90||window.orientation==-90){
+        $("#forhorview").css("display", "-webkit-box");  //显示竖屏浏览提示框
+    }else{//竖屏下恢复默认显示效果
+        var st=setTimeout(initScreen,300);
+         $("#forhorview").css("display", "none");    
+    }
+    _resize(e);
+}
+$(function(){
+    initScreen();
+    window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize",     function(e){_onorientationchange(e);}, false);
+})
